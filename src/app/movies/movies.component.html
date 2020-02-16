@@ -1,0 +1,66 @@
+<div class="col-md-12">&nbsp;</div>
+
+<div class="col-md-12">&nbsp;</div>
+<div class="col-md-12">&nbsp;</div>
+
+<div class="col-md-12 row">
+
+
+    <div class="col-md-3">&nbsp;</div>
+    <div class="col-md-6">
+        <div style="display: flex;justify-content: center;">
+            <h1><u> Welcome to the Movie World</u></h1>
+        </div>
+        <!-- Refresh Filters -->
+        <button type="submit" class="btn btn-warning" style="color: white;" (click)="refresh()">Refresh</button> all filters! <br>
+        <hr>
+        <!-- Sort in Descending order by given criterions -->
+        Sort in Descending order by <button type="button" value="1" style="margin: 2px;color: white;" (click)="sort($event.target)">Budget</button>
+        <button type="button" value="2" style="margin: 2px;color: white;" (click)="sort($event.target)">Rating</button> <button type="button" value="3" style="margin: 2px;color: white;" (click)="sort($event.target)">Release year</button> <br>
+        <hr>
+
+        <!-- Filter by Genres -->
+        Filter by genre
+        <p *ngFor="let genre of genres" style="display: inline-block;"><button type="button" value="{{genre}}" style="margin: 2px;color: white;" (click)="tags($event.target)">{{genre}}</button></p>
+        <hr>
+
+        <!-- Search by Movie Title -->
+        <input type="text" (keyup)="tags(1)" [(ngModel)]="filterText" class="form-control" placeholder="Search your Movie here">
+
+
+        <p *ngIf="nodata" style="color: red;">Oops!!! No result found Try giving different keywords and consider typing all lowercase
+        </p>
+        <hr>
+        <div class="col-md-12">&nbsp;</div>
+        <!-- List of Movies usign pagination of page size containing 10 items -->
+        <pagination-controls (pageChange)="p=$event" style="display: flex;justify-content: center;" (click)="gotop($event)"></pagination-controls>
+
+        <table class="table table-bordered">
+            <thead>
+                <th>Sl. No</th>
+                <th>Movie Details</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let movie of allMovies|paginate:{itemsPerPage:10,currentPage:p};let i = index">
+                    <td>{{(p-1)*10 + i+1}}</td>
+                    <td><strong>Title: </strong> {{movie.movie_title}} <br>
+                        <strong>Director: </strong>{{movie.director_name}} <br>
+
+                        <strong>Stars: </strong> {{movie.actor_1_name}} , {{movie.actor_2_name}} <br>
+                        <strong>Genres: </strong> {{movie.genres}} <br>
+                        <strong>Language: </strong>{{movie.language}} <br>
+                        <strong>Country: </strong>{{movie.country}} <br>
+                        <strong>Rating: </strong>{{movie.content_rating}} <br>
+                        <strong>Budget: </strong>{{movie.budget}} <br>
+                        <strong>Released Year: </strong> {{movie.title_year}} <br>
+                        <strong>Plot Words: </strong> {{movie.plot_keywords}} <br>
+                        <a href="{{movie.movie_imdb_link}}">{{movie.movie_imdb_link}}</a>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+        <pagination-controls (pageChange)="p=$event" style="display: flex;justify-content: center;" (click)="gotop($event)"></pagination-controls>
+    </div>
+
+</div>
